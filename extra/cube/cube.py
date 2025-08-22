@@ -2,7 +2,6 @@
 
 import pygame
 import moderngl
-import math
 import numpy as np
 import pyrr
 
