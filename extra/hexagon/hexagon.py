@@ -23,7 +23,7 @@ pygame.display.gl_set_attribute(pygame.GL_CONTEXT_PROFILE_MASK, pygame.GL_CONTEX
 pygame.display.gl_set_attribute(pygame.GL_CONTEXT_FORWARD_COMPATIBLE_FLAG, True)
 
 pygame.display.set_mode((WIDTH, HEIGHT), flags=pygame.OPENGL | pygame.DOUBLEBUF)
-pygame.display.set_caption(title="Trapezoid Practice")
+pygame.display.set_caption(title="Hexagon Practice")
 gl = moderngl.get_context()
 
 num_sides = 6
