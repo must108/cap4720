@@ -1,45 +1,45 @@
+# render a trapezoid with opengl
+
 import pygame
 import moderngl
 import numpy as np
 
-# load glsl files
+WIDTH = 600
+HEIGHT = 600
+
 with open("vert.glsl") as vert_file:
     vertex_shader_code = vert_file.read()
 with open("frag.glsl") as frag_file:
     fragment_shader_code = frag_file.read()
 
-# start running clock
 pygame.init()
 clock = pygame.time.Clock()
 running = True
 
-width = 600
-height = 600
-
-# for mac, using different version bc of this
 pygame.display.gl_set_attribute(pygame.GL_CONTEXT_MAJOR_VERSION, 3)
 pygame.display.gl_set_attribute(pygame.GL_CONTEXT_MINOR_VERSION, 3)
 pygame.display.gl_set_attribute(pygame.GL_CONTEXT_PROFILE_MASK, pygame.GL_CONTEXT_PROFILE_CORE)
 pygame.display.gl_set_attribute(pygame.GL_CONTEXT_FORWARD_COMPATIBLE_FLAG, True)
 
-# display must have opengl context
-pygame.display.set_mode((width, height), flags=pygame.OPENGL | pygame.DOUBLEBUF)
-pygame.display.set_caption(title="Class Practice 1")
-gl = moderngl.get_context() # get context that was just created
-
-# print the current gl version
-print(gl.info["GL_VERSION"])
+pygame.display.set_mode((WIDTH, HEIGHT), flags=pygame.OPENGL | pygame.DOUBLEBUF)
+pygame.display.set_caption(title="Trapezoid Practice")
+gl = moderngl.get_context()
 
 position_data = [
-    0.0, 0.8,
-    -0.8, -0.8,
-    0.8, -0.8
-] # basic upward facing triangle?
+    0, -0.05,
+    -0.3, 0.5,
+    0.3, 0.5,
 
-triangle_vertex_positions = np.array(position_data).astype("float32")
-# ^get geometry data in position_data and make into np array
+    0, -0.05,
+    -0.3, 0.5,
+    -0.6, -0.05,
 
-# create a buffer with the triangle positions, with gl.buffer()
+    0.3, 0.5,
+    0, -0.05,
+    0.6, -0.05,
+]
+
+triangle_vertex_positions = np.array(position_data).astype("f4")
 triangle_positions_buffer = gl.buffer(triangle_vertex_positions.tobytes())
 
 program = gl.program(
@@ -57,7 +57,7 @@ while running:
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == 27):
             running = False
 
-    gl.clear(0.5, 0.5, 0.0)
+    gl.clear(1.0, 1.0, 1.0) # background color
 
     renderable.render()
 
